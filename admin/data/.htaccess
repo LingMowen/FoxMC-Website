@@ -1,0 +1,16 @@
+# 默认拒绝所有文件访问
+Require all denied
+
+# 仅允许 content.json 被前端读取
+<Files "content.json">
+    Require all granted
+</Files>
+
+# 确保敏感文件不可访问
+<FilesMatch "\.(php|phtml|php3|php4|php5|phps|log|bak|sql|tmp)$">
+    Require all denied
+</FilesMatch>
+
+<Files ".ad_lock">
+    Require all denied
+</Files>

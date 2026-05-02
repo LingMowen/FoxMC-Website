@@ -1,0 +1,30 @@
+:root {
+  --bg-dark: #0f172a;
+  --bg-card: rgba(255, 255, 255, 0.03);
+  --primary-color: #ffffff;
+  --primary-hover: #f1f5f9;
+  --secondary-color: #e91e63;
+  --secondary-hover: #d81b60;
+  --accent-gold: #ffd700;
+  --accent-green: #00e676;
+  --text-main: #f8fafc;
+  --text-muted: #cbd5e1;
+  --glass-border: 1px solid rgba(255, 255, 255, 0.1);
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+  --container-width: 1200px;
+  --nav-height: 80px;
+  --transition: all 0.3s ease;
+}
+
+$bg-dark: #0f172a;
+$bg-card: rgba(255, 255, 255, 0.03);
+$primary-color: #ffffff;
+$primary-hover: #f1f5f9;
+$secondary-color: #e91e63;
+$secondary-hover: #d81b60;
+$accent-gold: #ffd700;
+$accent-green: #00e676;
+$text-main: #f8fafc;
+$text-muted: #cbd5e1;
+$container-width: 1200px;
+$nav-height: 80px;

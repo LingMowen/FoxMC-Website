@@ -1,31 +1,33 @@
 <template>
-  <nav class="navbar" :class="{ 'scrolled': isScrolled }">
-    <div class="container nav-container">
-      <a href="#" class="logo">
-        <svg class="logo-svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M4 4H20V20H4V4Z"/>
-          <path d="M4 12H20"/>
-          <path d="M12 4V20"/>
-        </svg>
-        <span class="logo-text">{{ site.logoText }}</span>
-      </a>
+  <div>
+    <nav class="navbar" :class="{ 'scrolled': isScrolled }">
+      <div class="container nav-container">
+        <a href="#" class="logo">
+          <svg class="logo-svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 4H20V20H4V4Z"/>
+            <path d="M4 12H20"/>
+            <path d="M12 4V20"/>
+          </svg>
+          <span class="logo-text">{{ site.logoText }}</span>
+        </a>
 
-      <!-- Desktop Navigation -->
-      <ul class="nav-links-desktop">
-        <li v-for="item in navItems" :key="item.href">
-          <a :href="item.href">{{ item.label }}</a>
-        </li>
-        <li>
-          <a href="javascript:void(0)" class="nav-register-btn" @click="showLoginAlert">登录/注册</a>
-        </li>
-      </ul>
+        <!-- Desktop Navigation -->
+        <ul class="nav-links-desktop">
+          <li v-for="item in navItems" :key="item.to">
+            <a href="javascript:void(0)" :class="{ active: route.path === item.to }" @click="navigateTo(item.to)">{{ item.label }}</a>
+          </li>
+          <li>
+            <a href="javascript:void(0)" class="nav-register-btn" @click="showLoginAlert">登录/注册</a>
+          </li>
+        </ul>
 
-      <!-- Hamburger Button -->
-      <div class="hamburger" :class="{ 'active': isMenuOpen }" @click="toggleMenu">
-        <span class="bar"></span>
-        <span class="bar"></span>
+        <!-- Hamburger Button -->
+        <div class="hamburger" :class="{ 'active': isMenuOpen }" @click="toggleMenu">
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </div>
       </div>
-    </div>
+    </nav>
 
     <!-- Sidebar Overlay -->
     <div class="sidebar-overlay" :class="{ 'active': isMenuOpen }" @click="closeMenu"></div>
@@ -43,8 +45,8 @@
       </div>
 
       <ul class="sidebar-nav">
-        <li v-for="item in navItems" :key="item.href">
-          <a :href="item.href" @click="closeMenu">
+        <li v-for="item in navItems" :key="item.to">
+          <a href="javascript:void(0)" :class="{ active: route.path === item.to }" @click="navigateTo(item.to)">
             <span class="nav-label">{{ item.label }}</span>
             <svg class="nav-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M9 18L15 12L9 6"/>
@@ -63,28 +65,36 @@
         </a>
       </div>
     </aside>
-  </nav>
+  </div>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 import { useSiteConfigStore } from '@/stores/siteConfig'
 
 const site = useSiteConfigStore().site
+const router = useRouter()
+const route = useRoute()
 
 const isMenuOpen = ref(false)
 const isScrolled = ref(false)
 
 const navItems = [
-  { label: '首页', href: '#home' },
-  { label: '配置', href: '#specs' },
-  { label: '帮助', href: '#help-docs' },
-  { label: '特色', href: '#features' },
-  { label: '相册', href: '#gallery' },
-  { label: '团队', href: '#team' },
-  { label: '联系', href: '#contact' },
-  { label: '社区', href: '#community' }
+  { label: '首页', to: '/' },
+  { label: '配置', to: '/specs' },
+  { label: '帮助', to: '/help' },
+  { label: '特色', to: '/features' },
+  { label: '相册', to: '/gallery' },
+  { label: '团队', to: '/team' },
+  { label: '联系', to: '/contact' },
+  { label: '社区', to: '/community' }
 ]
+
+const navigateTo = (to: string) => {
+  router.push(to)
+  closeMenu()
+}
 
 const toggleMenu = () => {
   isMenuOpen.value = !isMenuOpen.value
@@ -124,14 +134,25 @@ onUnmounted(() => {
   left: 0;
   width: 100%;
   z-index: 1000;
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(15, 23, 42, 0.95);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid rgba(6, 204, 244, 0.1);
   transition: var(--transition);
 
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 8px;
+    height: 100%;
+    background: rgba(15, 23, 42, 0.98);
+    z-index: 1;
+  }
+
   &.scrolled {
-    background: rgba(15, 23, 42, 0.95);
+    background: rgba(15, 23, 42, 0.98);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   }
 }
@@ -186,6 +207,14 @@ onUnmounted(() => {
     }
 
     &:hover {
+      color: var(--primary-color);
+
+      &::after {
+        width: 100%;
+      }
+    }
+
+    &.active {
       color: var(--primary-color);
 
       &::after {
@@ -362,6 +391,12 @@ onUnmounted(() => {
           transform: translateX(5px);
           color: var(--accent-green);
         }
+      }
+
+      &.active {
+        background: rgba(233, 30, 99, 0.1);
+        color: var(--primary-color);
+        border-left: 3px solid var(--primary-color);
       }
     }
   }

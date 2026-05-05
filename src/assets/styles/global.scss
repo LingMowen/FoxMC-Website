@@ -8,7 +8,54 @@
   font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
 }
 
+/* Custom Scrollbar Styles - WebKit Browsers (Chrome, Edge, Safari) */
 html {
+  scrollbar-gutter: stable;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+  transition: background 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: rgba(255, 255, 255, 0.6);
+}
+
+/* Firefox scrollbar */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.2) rgba(255, 255, 255, 0.05);
+}
+
+/* Hide scrollbar in navbar area */
+.navbar {
+  padding-right: 8px;
+  
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+html {
+  background: var(--bg-dark);
+  overflow: hidden;
+  height: 100vh;
   scroll-behavior: smooth;
   scroll-padding-top: var(--nav-height);
 }
@@ -17,7 +64,9 @@ body {
   background-color: var(--bg-dark);
   color: var(--text-main);
   line-height: 1.6;
+  overflow-y: auto;
   overflow-x: hidden;
+  height: 100%;
   background-image:
     radial-gradient(circle at 10% 20%, rgba(255, 255, 255, 0.08) 0%, transparent 20%),
     radial-gradient(circle at 90% 80%, rgba(233, 30, 99, 0.08) 0%, transparent 20%);

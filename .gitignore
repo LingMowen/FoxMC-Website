@@ -1,39 +1,61 @@
-# Logs
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
-
-node_modules
+# ========== 系统文件 ==========
 .DS_Store
-dist
-dist-ssr
-coverage
-*.local
+Thumbs.db
+desktop.ini
+$RECYCLE.BIN/
 
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+# ========== IDE / 编辑器 ==========
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.swp
+*.swo
+*~
 
-*.tsbuildinfo
+# ========== 操作系统 ==========
+# Windows
+ehthumbs.db
+[Dd]esktop.ini
 
-.eslintcache
+# ========== 日志文件 ==========
+*.log
+error_log
 
-# Cypress
-/cypress/videos/
-/cypress/screenshots/
+# ========== 运行时数据文件 ==========
+admin/data/rate_limit.json
+admin/data/.pwd_reset_attempts.json
+admin/data/.settings.json
+admin/data/settings.json
 
-# Vitest
-__screenshots__/
+# ========== 上传目录（用户上传内容） ==========
+admin/uploads/msg_images/*
+!admin/uploads/msg_images/.htaccess
+admin/uploads/*
+!admin/uploads/msg_images/
+!admin/uploads/.htaccess
 
-# Vite
-*.timestamp-*-*.mjs
+# ========== 备份文件 ==========
+*.bak
+*.backup
+*.sql
+*.zip
+*.tar.gz
+*.rar
+
+# ========== 环境配置 ==========
+.env
+.env.local
+.env.*.local
+
+# ========== 包管理器 ==========
+node_modules/
+vendor/
+composer.lock
+package-lock.json
+yarn.lock
+
+# ========== 临时文件 ==========
+*.tmp
+*.temp
+*.cache

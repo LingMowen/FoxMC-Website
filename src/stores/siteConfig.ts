@@ -103,25 +103,46 @@ export interface CommunityConfig {
   }
 }
 
+export interface FriendLink {
+  name: string
+  url: string
+}
+
+export interface FooterConfig {
+  desc: string
+  copyright: string
+  friendLinks: FriendLink[]
+}
+
+// Load from localStorage or use defaults
+const loadFromStorage = <T>(key: string, defaults: T): T => {
+  try {
+    const stored = localStorage.getItem(key)
+    return stored ? { ...defaults, ...JSON.parse(stored) } : defaults
+  } catch {
+    return defaults
+  }
+}
+
 export const useSiteConfigStore = defineStore('siteConfig', () => {
   // Site config
-  const site = ref<SiteConfig>({
+  const site = ref<SiteConfig>(loadFromStorage('site_config', {
     title: '我的世界小狐狸生存服',
     description: '大型多人在线生存服务器，提供纯净生存、RPG冒险、建筑创造等多种玩法。',
     serverIp: 'play.example.com',
     logoText: '我的世界服务器',
     logoImage: ''
-  })
+  }))
 
   // Hero config
-  const hero = ref<HeroConfig>({
+  const hero = ref<HeroConfig>(loadFromStorage('hero_config', {
     badge: '现在游玩就送点卷大礼包！',
     titleLine1: '欢迎来到',
     titleHighlight: '小狐狸生存服',
     subtitle: '由专业团队倾力打造的大型多人在线游戏，为您带来高质量的游戏体验',
     features: ['不逼氪', '支持生电', '腐竹女装'],
     bgImage: '/png/c6d2dd6a664242e2e5faa640d28c340b.jpg'
-  })
+  }))
 
   // Specs config
   const specs = ref<SpecsConfig>({
@@ -220,6 +241,16 @@ export const useSiteConfigStore = defineStore('siteConfig', () => {
     }
   })
 
+  // Footer config
+  const footer = ref<FooterConfig>(loadFromStorage('footer_config', {
+    desc: '我们致力于打造最优质的 Minecraft 多人游戏体验，期待您的加入！',
+    copyright: '© 2024 FoxMC. All rights reserved.',
+    friendLinks: [
+      { name: 'Minecraft 官网', url: 'https://www.minecraft.net/' },
+      { name: '雨云 IDC', url: 'https://www.rainyun.com/' }
+    ]
+  }))
+
   return {
     site,
     hero,
@@ -228,6 +259,7 @@ export const useSiteConfigStore = defineStore('siteConfig', () => {
     features,
     gallery,
     team,
-    community
+    community,
+    footer
   }
 })

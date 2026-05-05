@@ -62,6 +62,7 @@
 import { ref, onMounted } from 'vue'
 import { useSiteConfigStore } from '@/stores/siteConfig'
 import { useCopyToClipboard } from '@/composables/useCopyToClipboard'
+import { useScrollAnimation } from '@/composables/useScrollAnimation'
 
 const { site, hero } = useSiteConfigStore()
 const { copy, copied } = useCopyToClipboard()
@@ -71,6 +72,9 @@ const playerCount = ref('加载中...')
 const copyServerIp = () => {
   copy(site.serverIp)
 }
+
+// 初始化滚动动画
+useScrollAnimation()
 
 // 模拟获取服务器状态
 onMounted(() => {
@@ -106,13 +110,33 @@ onMounted(() => {
 .hero-container {
   width: 100%;
   display: flex;
-  padding-top: var(--nav-height);
+  padding-top: 0;
   position: relative;
   z-index: 2;
 }
 
 .hero-content {
   max-width: 650px;
+}
+
+/* Hero section animations */
+.scroll-fade-up {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+.delay-200 { animation-delay: 0.2s; }
+.delay-300 { animation-delay: 0.3s; }
+.delay-400 { animation-delay: 0.4s; }
+.delay-500 { animation-delay: 0.5s; }
+.delay-600 { animation-delay: 0.6s; }
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .hero-badge {
